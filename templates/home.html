@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Reminder</title>
+    <!-- Add any additional stylesheets or meta tags here -->
+</head>
+<body>
+    <header>
+        <h1>Birthday Reminder</h1>
+    </header>
+    <main>
+        <div>
+            <img src="{{ url_for('static', filename='path_to_your_image.jpg') }}" alt="Birthday Reminder Logo">
+            <p>Welcome to our Birthday Reminder App! Never miss a special day again. Keep track of birthdays and celebrate with your loved ones. Let's make every day a celebration of friendship and joy!</p>
+        </div>
+        <div>
+            <!-- Add your login/authentication or sign-in/register form here -->
+            <!-- Example form structure -->
+            <form action="/login" method="post">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type ="submit"primary">Login</button>
+            </form>
+            <p>Don't have an account? <a href="/register">Register here</a></p>
+        </div>
+    </main>
+    <footer>
+        <!-- Add footer content if needed -->
+    </footer>
+</body>
+</html>
