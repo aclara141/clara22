@@ -1,0 +1,30 @@
+$(document).ready(function() {
+    // Initialize the calendar
+    $('#calendar').fullCalendar({
+        // Your calendar options here
+        // For simplicity, let's use basic options
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        editable: true, // Allow events to be dragged and resized
+        eventLimit: true, // Allow "more" link when too many events
+        events: [], // You can load events dynamically or from a backend API
+        // Event drop and resize callback functions can be added here
+    });
+
+    // Handle form submission for adding events
+    $('#eventForm').submit(function(event) {
+        event.preventDefault();
+        var eventName = $('#eventName').val();
+        var eventDate = $('#eventDate').val();
+        $('#calendar').fullCalendar('renderEvent', {
+            title: eventName,
+            start: eventDate,
+            allDay: true
+        }, true); // Stick to the calendar
+        $('#eventName').val('');
+        $('#eventDate').val('');
+    });
+});
