@@ -10,7 +10,7 @@ $(document).ready(function() {
         },
         editable: true, // Allow events to be dragged and resized
         eventLimit: true, // Allow "more" link when too many events
-        events: [], // You can load events dynamically or from a backend API
+        events: '/get_events', // Load events from backend
         // Event drop and resize callback functions can be added here
     });
 
@@ -19,11 +19,18 @@ $(document).ready(function() {
         event.preventDefault();
         var eventName = $('#eventName').val();
         var eventDate = $('#eventDate').val();
-        $('#calendar').fullCalendar('renderEvent', {
-            title: eventName,
-            start: eventDate,
-            allDay: true
-        }, true); // Stick to the calendar
+        $.ajax({
+            url: '/add_event',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ title: eventName, date: eventDate }),
+            success: function(response) {
+                $('#calendar').fullCalendar('refetchEvents'); // Refresh calendar events
+            },
+            error: function(xhr, status, error) {
+                alert('Error adding event');
+            }
+        });
         $('#eventName').val('');
         $('#eventDate').val('');
     });

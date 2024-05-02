@@ -19,6 +19,13 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
+# Define Event model
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
 # Create database tables if they don't exist
 with app.app_context():
     db.create_all()
@@ -58,10 +65,19 @@ def login():
     except TemplateNotFound:
         return "Error: Template 'login.html' not found"
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     if 'user_id' in session:
-        return render_template('dashboard.html')
+        user_id = session['user_id']
+        if request.method == 'POST':
+            title = request.form['title']
+            date = request.form['date']
+            new_event = Event(title=title, date=date, user_id=user_id)
+            db.session.add(new_event)
+            db.session.commit()
+            return redirect(url_for('dashboard'))
+        events = Event.query.filter_by(user_id=user_id).all()
+        return render_template('dashboard.html', events=events)
     else:
         return redirect(url_for('login'))
 

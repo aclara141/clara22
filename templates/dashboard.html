@@ -4,34 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <!-- Include Bootstrap for styling (optional) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include JavaScript for handling AJAX requests -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>Dashboard</h1>
+        <h1>Welcome to your dashboard!</h1>
     </header>
     <main>
-        <p>Welcome to your dashboard!</p>
-        <!-- Calendar container -->
-        <div id="calendar"></div>
-        <!-- Event form -->
-        <form id="eventForm" class="mt-3">
-            <div class="form-group">
-                <label for="eventName">Event Name:</label>
-                <input type="text" id="eventName" name="eventName" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="eventDate">Event Date:</label>
-                <input type="date" id="eventDate" name="eventDate" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Event</button>
+        <h2>Add Event</h2>
+        <form method="POST" action="{{ url_for('dashboard') }}">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+            <button type="submit">Add Event</button>
         </form>
+        <h2>Your Events</h2>
+        <ul>
+            {% for event in events %}
+            <li>{{ event.title }} - {{ event.date }}</li>
+            {% endfor %}
+        </ul>
     </main>
-    <!-- Include JavaScript for handling the calendar and event form -->
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Reminder</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <!-- Add any additional stylesheets or meta tags here -->
+    <title>Birthday Reminder - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <header>
         <h1>Birthday Reminder</h1>
     </header>
     <main>
-        <div>
+        <div class="welcome-section">
             <img src="{{ url_for('static', filename='path_to_your_image.jpg') }}" alt="Birthday Reminder Logo">
             <p>Welcome to our Birthday Reminder App! Never miss a special day again. Keep track of birthdays and celebrate with your loved ones. Let's make every day a celebration of friendship and joy!</p>
         </div>
-        <div>
+        <div class="user-section">
+            <!-- Display user-specific content if logged in -->
+            {% if current_user %}
+            <h2>Welcome, {{ current_user.username }}!</h2>
+            <p>You can manage your birthday reminders and events here.</p>
+            <a href="/logout">Logout</a>
+            {% else %}
             <!-- Add your login/authentication or sign-in/register form here -->
             <!-- Example form structure -->
             <form action="/login" method="post">
@@ -26,6 +30,7 @@
                 <button type="submit">Login</button>
             </form>
             <p>Don't have an account? <a href="/register">Register here</a></p>
+            {% endif %}
         </div>
     </main>
     <footer>
